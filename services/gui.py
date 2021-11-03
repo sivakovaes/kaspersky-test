@@ -2,11 +2,23 @@ import tkinter as tk
 from tkinter import ttk
 
 
+WINDOW_TITLE = 'App'
+ETHERIUM = 'Etherium'
+BITCOIN = 'Bitcoin'
+LITECOIN = 'Litecoin'
+
+
 class GUI(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title('App')
+        self.title(WINDOW_TITLE)
+        self.default_paddings = {'padx': 5, 'pady': 5}
+        self.set_window_geometry()
+        self.currency_types = (ETHERIUM, BITCOIN, LITECOIN)
+        self.current_currency_type = tk.StringVar()
+        self.create_wigets()
 
+    def set_window_geometry(self):
         self.window_width = 300
         self.window_height = 200
 
@@ -17,37 +29,24 @@ class GUI(tk.Tk):
         self.center_y = int(self.screen_height / 2 - self.window_height / 2)
         self.geometry(f'{self.window_width}x{self.window_height}+{self.center_x}+{self.center_y}')
 
-        self.currency =('val1', 'val2', 'val3')
-
-        self.option_var = tk.StringVar()
-        self.create_wigets()
-
-    def select(self, option):
-        paddings = {'padx': 5, 'pady': 5}
-        baton=ttk.Button(self, text='Print v consol', command=lambda: self.print_in_consol(self.option_var.get()))
-        baton.grid(column=1, row=3, sticky=tk.W, **paddings)
-
-    def print_in_consol(self, option):
-        print(option)
+    def get_currency_cost(self):
+        currency_type = self.current_currency_type.get()
+        print(currency_type)
 
     def create_wigets(self):
-        paddings = {'padx': 5, 'pady': 5}
-
         label = ttk.Label(self,  text='Select currency:')
-        label.grid(column=0, row=0, sticky=tk.W, **paddings)
+        label.grid(column=0, row=0, sticky=tk.W, **self.default_paddings)
+
         option_menu = ttk.OptionMenu(
             self,
-            self.option_var,
-            self.currency[0],
-            *self.currency,
-            command=self.select)
+            self.current_currency_type,
+            self.currency_types[0],
+            *self.currency_types
+        )
+        option_menu.grid(column=1, row=0, sticky=tk.W, **self.default_paddings)
 
-        baton=ttk.Button(self, text='Print v consol', command=lambda: self.print_in_consol(self.option_var.get()))
-        baton.grid(column=1, row=3, sticky=tk.W, **paddings)
+        output_label = ttk.Label(self, foreground='red')
+        output_label.grid(column=0, row=1, sticky=tk.W, **self.default_paddings)
 
-        option_menu.grid(column=1, row=0, sticky=tk.W, **paddings)
-        self.output_label = ttk.Label(self, foreground='red')
-        self.output_label.grid(column=0, row=1, sticky=tk.W, **paddings)
-
-    def option_changed(self, *args):
-        self.output_label['text'] = f'currency: {self.option_var.get()}'
+        button = ttk.Button(self, text='Get Cost', command=self.get_currency_cost)
+        button.grid(column=1, row=3, sticky=tk.W, **self.default_paddings)
