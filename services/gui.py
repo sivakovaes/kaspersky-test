@@ -13,13 +13,13 @@ class GUI(tk.Tk):
         self.screen_width = self.winfo_screenwidth()
         self.screen_height = self.winfo_screenheight()
 
-        self.center_x = int(self.screen_width/2 - self.window_width / 2)
-        self.center_y = int(self.screen_height/2 - self.window_height / 2)
+        self.center_x = int(self.screen_width / 2 - self.window_width / 2)
+        self.center_y = int(self.screen_height / 2 - self.window_height / 2)
         self.geometry(f'{self.window_width}x{self.window_height}+{self.center_x}+{self.center_y}')
 
-        self.currency =('val1','val2','val3')
+        self.currency =('val1', 'val2', 'val3')
 
-        self.option_var = tk.StringVar(self)
+        self.option_var = tk.StringVar()
         self.create_wigets()
 
     def select(self, option):
@@ -51,8 +51,3 @@ class GUI(tk.Tk):
 
     def option_changed(self, *args):
         self.output_label['text'] = f'currency: {self.option_var.get()}'
-
-
-if __name__ == "__main__":
-    app = App()
-    app.mainloop()
