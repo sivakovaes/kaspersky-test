@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 import requests
 from services.get_api_values import get_values
+from services.excel import generate_report
+
 
 WINDOW_TITLE = 'App'
 ETHERIUM = 'Etherium'
@@ -20,6 +22,9 @@ class GUI(tk.Tk):
         self.create_wigets()
         self.print_currency_cost()
         self.values = get_values()
+        # self.generate_reports = generate_report()
+        self.get_currency_costs()
+        self.get_currency_cost()
 
     def set_window_geometry(self):
         self.window_width = 600
@@ -41,8 +46,12 @@ class GUI(tk.Tk):
         output_label.grid(column=0, row=2, sticky=tk.W,
                             **self.default_paddings)
         output_label['text'] = f'{self.current_currency_type.get()} exchange rate in dollars now: {self.get_currency_cost()}'
+    
+    def get_currency_costs(self):
+        return self.get_values()
+    
     def get_currency_cost(self):
-        val=get_values()
+        val=self.get_currency_costs()
         currency_type = self.current_currency_type.get()
         if currency_type == BITCOIN:
             currency_value = val[0]
@@ -69,3 +78,7 @@ class GUI(tk.Tk):
         button = ttk.Button(self, text='Get Cost', 
                             command=self.print_currency_cost)
         button.grid(column=1, row=3, sticky=tk.W, **self.default_paddings)
+
+        button_xlsl = ttk.Button(self, text='To Excel', 
+                            command=generate_report(self.get_currency_costs()))
+        button_xlsl.grid(column=2, row=5, sticky=tk.W, **self.default_paddings)
