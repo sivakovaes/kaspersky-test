@@ -1,6 +1,6 @@
-from services import GUI
+from services import App
 
 
 if __name__ == "__main__":
-    app = GUI()
+    app = App()
     app.mainloop()

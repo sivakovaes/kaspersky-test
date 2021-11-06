@@ -1,7 +1,8 @@
 from openpyxl import Workbook
 from datetime import datetime
 
-def generate_report(*costs):
+
+def process_xlsx(**kwargs):
     date = datetime.now().strftime("%Y-%m-%d")
     time = datetime.now().strftime("%H-%M-%S")
 
@@ -11,8 +12,8 @@ def generate_report(*costs):
     ws['A3'] = 'Bitcoin'
     ws['A4'] = 'Etherium'
     ws['A5'] = 'Litecoin'
-    ws['B3'] = costs[0][0]
-    ws['B4'] = costs[0][1]
-    ws['B5'] = costs[0][2]
+    ws['B3'] = kwargs.get('BTC')
+    ws['B4'] = kwargs.get('ETH')
+    ws['B5'] = kwargs.get('LTC')
 
     wb.save(f"currency_{date}_{time}.xlsx")
