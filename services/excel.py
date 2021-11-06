@@ -8,8 +8,11 @@ def generate_report(*costs):
     wb = Workbook()
     ws = wb.active
     ws['A1'] = 'Values'
-    ws.append(['Bitcoin', costs[0]])
-    ws.append(['Etherium', costs[1]])
-    ws.append(['TiLitecoinme', costs[2]])
+    ws['A3'] = 'Bitcoin'
+    ws['A4'] = 'Etherium'
+    ws['A5'] = 'Litecoin'
+    ws['B3'] = costs[0][0]
+    ws['B4'] = costs[0][1]
+    ws['B5'] = costs[0][2]
 
     wb.save(f"currency_{date}_{time}.xlsx")

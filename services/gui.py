@@ -21,8 +21,6 @@ class GUI(tk.Tk):
         self.current_currency_type = tk.StringVar()
         self.create_wigets()
         self.print_currency_cost()
-        self.values = get_values()
-        # self.generate_reports = generate_report()
         self.get_currency_costs()
         self.get_currency_cost()
 
@@ -48,7 +46,8 @@ class GUI(tk.Tk):
         output_label['text'] = f'{self.current_currency_type.get()} exchange rate in dollars now: {self.get_currency_cost()}'
     
     def get_currency_costs(self):
-        return self.get_values()
+        values_from_api = get_values()
+        return values_from_api
     
     def get_currency_cost(self):
         val=self.get_currency_costs()
@@ -80,5 +79,5 @@ class GUI(tk.Tk):
         button.grid(column=1, row=3, sticky=tk.W, **self.default_paddings)
 
         button_xlsl = ttk.Button(self, text='To Excel', 
-                            command=generate_report(self.get_currency_costs()))
-        button_xlsl.grid(column=2, row=5, sticky=tk.W, **self.default_paddings)
+                            command=lambda i=self.get_currency_costs(): generate_report(i))
+        button_xlsl.grid(column=2, row=3, sticky=tk.W, **self.default_paddings)
