@@ -25,7 +25,7 @@ def request_currency():
         print("Error")
 
     res_data = res.json()
-    
+
     currency = {
         "BTC": res_data.get('BTC', {}).get('USD'),
         "ETH": res_data.get('ETH', {}).get('USD'),
